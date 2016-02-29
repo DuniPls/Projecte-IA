@@ -506,12 +506,71 @@ void Boid::DoCollisionAvoidance(float deltaTime)
 
 }
 
+void Boid::DoSearchForFood(float deltaTime) {
+#if DEBUG
+	float shortestDistance = 999999999.9f;
+	Entity* firstTarget = nullptr;
+
+	Vector2D coneBasePoint = { position.x + coneHeight, position.y };
+	Vector2D currentConeBase = Vector2DUtils::RotatePoint(position, coneBasePoint, angle);
+
+	collisionDetected = false;
+
+	for (int i = 0; i < numTargets; ++i)
+	{
+		Entity* currentTarget = targets[i];
+
+		// Is target inside the cone?
+		if (Vector2DUtils::IsInsideCone(currentTarget->position, position, currentConeBase, coneHalfAngle))
+		{
+			float currentDistance = Vector2D::Distance(position, currentTarget->position);
+			// Is the nearest targest inside the cone?
+			if (currentDistance < shortestDistance)
+			{
+				firstTarget = currentTarget;
+				shortestDistance = currentDistance;
+				collisionDetected = true;
+			}
+		}
+	}
+
+	if (firstTarget == nullptr)
+	{
+		return;
+	}
+
+	// Flee from collision
+	steeringForce = SteeringUtils::DoSteeringSeek(firstTarget->position, position, speed, K_MAX_SPEED, K_MAX_STEER_AVOID_FORCE);
+#else
+	steeringForce = AdvancedSteeringUtils::DoCollisionAvoidance(position, speed, angle, K_MAX_SPEED, K_MAX_STEER_AVOID_FORCE, (Entity**)targets,
+		numTargets, coneHeight, coneHalfAngle, collisionDetected);
+#endif
+	// Modify according to mass to get acceleration
+	acceleration = steeringForce / mass;
+
+	// Update Speed with acceleration
+	speed += acceleration * deltaTime;
+}
+
 void Boid::AddTargetForCollisionAvoidance(Entity* target)
 {
 	if (numTargets < MAX_NUMBER_TARGETS)
 	{
 		targets[numTargets] = target;
 		++numTargets;
+	}
+	else
+	{
+		SDL_Log("Target Array reached max number of targets.");
+	}
+}
+
+void Boid::AddTargetForFoodSearch(Entity* food)
+{
+	if (numFoods < MAX_NUMBER_TARGETS)
+	{
+		food[numFoods]=*food;
+		++numFoods;
 	}
 	else
 	{

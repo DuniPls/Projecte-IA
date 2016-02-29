@@ -26,18 +26,7 @@ void EcosystemState::Init()
 		SDL_Log("Failed to load Image!\n");
 	}
 
-	playerTexture = {};
-	SetResourcesFilePath("Images/Player.png");
-	if (Texture_LoadFromFile(&playerTexture, display->renderer, resourcesFilePath) == false)
-	{
-		SDL_Log("Failed to load Image!\n");
-	}
-
 	// Initialize Entities
-	//player = {};
-	player.position = { FIXED_WIDTH / 2,  FIXED_HEIGHT / 2 };
-	player.width = playerTexture.width;
-	player.height = playerTexture.height;
 
 	// Seed Random
 	srand(5555);
@@ -50,8 +39,15 @@ void EcosystemState::Init()
 	boid.width = boidTexture.width;
 	boid.height = boidTexture.height;
 
-	boid.target = &player;
-	boid.SetBehaviour(Behaviour::WANDER);
+	boid.target = nullptr;
+
+	boid.food = nullptr;
+	
+	for (int i = 0; i < 10; i++)
+	{
+		boid.AddTargetForFoodSearch(&recurs[i]);
+	}
+	boid.SetBehaviour(Behaviour::NONE);
 	boid.InitDebug(display->renderer, fontVerySmall);
 	for (size_t i = 0; i < 10; i++)
 	{
@@ -79,7 +75,6 @@ void EcosystemState::Deinit()
 	Trail_Free(&boidTrail);
 	boid.DeinitDebug();
 	Texture_Free(&boidTexture);
-	Texture_Free(&playerTexture);
 	FC_FreeFont(fontVerySmall);
 	FC_FreeFont(fontSmall);
 	FC_FreeFont(fontBig);
@@ -211,7 +206,6 @@ StateCode EcosystemState::HandleInput()
 		paused = !paused;
 	}
 
-	player.HandleInput();
 
 	return StateCode::CONTINUE;
 }
@@ -229,8 +223,11 @@ void EcosystemState::Update(float deltaTime)
 	float currentDeltaTime = deltaTime * timeScale;
 
 	// Update Entities
-	player.Update(currentDeltaTime);
+	boid.DoFullWander(currentDeltaTime);
+	boid.DoPerimeterAvoidance(currentDeltaTime);
+	boid.DoSearchForFood(currentDeltaTime);
 	boid.Update(currentDeltaTime);
+
 
 	// Update Trail
 	bool updateTrail = false;
@@ -306,7 +303,6 @@ void EcosystemState::Render()
 	}
 
 	// Render Entities
-	player.Render(&playerTexture, display->renderer);
 	boid.Render(&boidTexture, display->renderer);
 	for (size_t i = 0; i < 10; i++)		
 		Recurs_Render(&recurs[i], display->renderer, Colors::ALIZARIN);
@@ -328,7 +324,7 @@ void EcosystemState::CreateBoid(int x, int y)
 		boidPool[boidPoolOccupation].width = boidTexture.width;
 		boidPool[boidPoolOccupation].height = boidTexture.height;
 
-		boidPool[boidPoolOccupation].target = &player;
+		boidPool[boidPoolOccupation].target = nullptr;
 		boidPool[boidPoolOccupation].SetBehaviour(boid.currentBehaviour);
 		++boidPoolOccupation;
 

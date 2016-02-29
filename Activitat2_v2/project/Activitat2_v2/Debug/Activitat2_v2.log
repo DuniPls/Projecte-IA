@@ -1,72 +1,8 @@
-﻿Build started 25/02/2016 17:12:30.
-     1>Project "C:\Users\dcastello\Documents\GitHub\Projecte-IA\Activitat2_v2\project\Activitat2_v2\Activitat2_v2.vcxproj" on node 2 (Build target(s)).
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I"C:\Users\dcastello\Documents\GitHub\Projecte-IA\Activitat2_v2\project\Activitat2_v2\..\..\lib\SDL2\include" /I"C:\Users\dcastello\Documents\GitHub\Projecte-IA\Activitat2_v2\project\Activitat2_v2\..\..\lib\SDL2_image\include" /I"C:\Users\dcastello\Documents\GitHub\Projecte-IA\Activitat2_v2\project\Activitat2_v2\..\..\lib\SDL2_ttf\include" /I"C:\Users\dcastello\Documents\GitHub\Projecte-IA\Activitat2_v2\project\Activitat2_v2\..\..\lib\SDL2_mixer\include" /I"C:\Users\dcastello\Documents\GitHub\Projecte-IA\Activitat2_v2\project\Activitat2_v2\..\..\dependencies\\" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _CRT_SECURE_NO_WARNINGS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TC /wd4244 /analyze- /errorReport:prompt ..\..\dependencies\SDL_FontCache\SDL_FontCache.c ..\..\dependencies\SDL_gfx\SDL2_gfxPrimitives.c ..\..\dependencies\SDL_gfx\SDL2_rotozoom.c
-         SDL2_rotozoom.c
-         SDL2_gfxPrimitives.c
-         SDL_FontCache.c
-         Generating Code...
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I"C:\Users\dcastello\Documents\GitHub\Projecte-IA\Activitat2_v2\project\Activitat2_v2\..\..\lib\SDL2\include" /I"C:\Users\dcastello\Documents\GitHub\Projecte-IA\Activitat2_v2\project\Activitat2_v2\..\..\lib\SDL2_image\include" /I"C:\Users\dcastello\Documents\GitHub\Projecte-IA\Activitat2_v2\project\Activitat2_v2\..\..\lib\SDL2_ttf\include" /I"C:\Users\dcastello\Documents\GitHub\Projecte-IA\Activitat2_v2\project\Activitat2_v2\..\..\lib\SDL2_mixer\include" /I"C:\Users\dcastello\Documents\GitHub\Projecte-IA\Activitat2_v2\project\Activitat2_v2\..\..\dependencies\\" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _CRT_SECURE_NO_WARNINGS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /wd4244 /analyze- /errorReport:prompt ..\..\source\Common\BaseState.cpp ..\..\source\FlowField.cpp ..\..\source\FlowFieldState.cpp ..\..\source\FlowObstacle.cpp ..\..\source\Recurs.cpp ..\..\source\Constants.h ..\..\source\SteeringGroup.cpp
-         SteeringGroup.cpp
-         Constants.h
-         Recurs.cpp
-         FlowObstacle.cpp
-         FlowFieldState.cpp
-         FlowField.cpp
-         BaseState.cpp
-         Generating Code...
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I"C:\Users\dcastello\Documents\GitHub\Projecte-IA\Activitat2_v2\project\Activitat2_v2\..\..\lib\SDL2\include" /I"C:\Users\dcastello\Documents\GitHub\Projecte-IA\Activitat2_v2\project\Activitat2_v2\..\..\lib\SDL2_image\include" /I"C:\Users\dcastello\Documents\GitHub\Projecte-IA\Activitat2_v2\project\Activitat2_v2\..\..\lib\SDL2_ttf\include" /I"C:\Users\dcastello\Documents\GitHub\Projecte-IA\Activitat2_v2\project\Activitat2_v2\..\..\lib\SDL2_mixer\include" /I"C:\Users\dcastello\Documents\GitHub\Projecte-IA\Activitat2_v2\project\Activitat2_v2\..\..\dependencies\\" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _CRT_SECURE_NO_WARNINGS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /wd4244 /analyze- /errorReport:prompt ..\..\source\EcosystemState.cpp ..\..\source\Boid.cpp ..\..\source\Common\Entity.cpp ..\..\source\Common\BitmapFont.cpp ..\..\source\Common\InputSingleton.cpp ..\..\source\Common\Texture.cpp ..\..\source\Common\RotatedText.cpp ..\..\source\Common\App.cpp ..\..\source\Common\StateManager.cpp ..\..\source\Common\Timer.cpp ..\..\source\Common\Trail.cpp ..\..\source\Common\Display.cpp ..\..\source\Main.cpp ..\..\source\MenuState.cpp ..\..\source\Path.cpp ..\..\source\Player.cpp ..\..\source\SimplePath.cpp ..\..\source\Obstacle.cpp
-         Obstacle.cpp
-         SimplePath.cpp
-         Player.cpp
-         Path.cpp
-         MenuState.cpp
-         Main.cpp
-         Display.cpp
-         Trail.cpp
-         Timer.cpp
-         StateManager.cpp
-         App.cpp
-         RotatedText.cpp
-         Texture.cpp
-         InputSingleton.cpp
-         BitmapFont.cpp
-         Entity.cpp
-         Boid.cpp
-         EcosystemState.cpp
-         Generating Code...
-       Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\dcastello\Documents\GitHub\Projecte-IA\Activitat2_v2\project\Activitat2_v2\..\..\bin\Activitat2_v2.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Users\dcastello\Documents\GitHub\Projecte-IA\Activitat2_v2\project\Activitat2_v2\..\..\lib\SDL2_mixer\lib\x86" /LIBPATH:"C:\Users\dcastello\Documents\GitHub\Projecte-IA\Activitat2_v2\project\Activitat2_v2\..\..\lib\SDL2_ttf\lib\x86" /LIBPATH:"C:\Users\dcastello\Documents\GitHub\Projecte-IA\Activitat2_v2\project\Activitat2_v2\..\..\lib\SDL2_image\lib\x86" /LIBPATH:"C:\Users\dcastello\Documents\GitHub\Projecte-IA\Activitat2_v2\project\Activitat2_v2\..\..\lib\SDL2\lib\x86" SDL2_image.lib SDL2_ttf.lib SDL2_mixer.lib SDL2.lib SDL2main.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\dcastello\Documents\GitHub\Projecte-IA\Activitat2_v2\project\Activitat2_v2\..\..\bin\Activitat2_v2.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\dcastello\Documents\GitHub\Projecte-IA\Activitat2_v2\project\Activitat2_v2\..\..\bin\Activitat2_v2.lib" /MACHINE:X86 Debug\SDL_FontCache.obj
-         Debug\SDL2_gfxPrimitives.obj
-         Debug\SDL2_rotozoom.obj
-         Debug\BaseState.obj
-         Debug\FlowField.obj
-         Debug\FlowFieldState.obj
-         Debug\FlowObstacle.obj
-         Debug\Recurs.obj
-         Debug\Constants.obj
-         Debug\SteeringGroup.obj
-         Debug\EcosystemState.obj
-         Debug\Boid.obj
-         Debug\Entity.obj
-         Debug\BitmapFont.obj
-         Debug\InputSingleton.obj
-         Debug\Texture.obj
-         Debug\RotatedText.obj
-         Debug\App.obj
-         Debug\StateManager.obj
-         Debug\Timer.obj
-         Debug\Trail.obj
-         Debug\Display.obj
-         Debug\Main.obj
-         Debug\MenuState.obj
-         Debug\Path.obj
-         Debug\Player.obj
-         Debug\SimplePath.obj
-         Debug\Obstacle.obj
-         Activitat2_v2.vcxproj -> C:\Users\dcastello\Documents\GitHub\Projecte-IA\Activitat2_v2\project\Activitat2_v2\..\..\bin\Activitat2_v2.exe
-     1>Done Building Project "C:\Users\dcastello\Documents\GitHub\Projecte-IA\Activitat2_v2\project\Activitat2_v2\Activitat2_v2.vcxproj" (Build target(s)).
-
-Build succeeded.
-
-Time Elapsed 00:00:11.28
+﻿  EcosystemState.cpp
+c:\users\dani\documents\github\projecte-ia\activitat2_v2\source\ecosystemstate.cpp(44): error C3863: el tipo de matriz 'Entity *[10]' no es asignable
+c:\users\dani\documents\github\projecte-ia\activitat2_v2\source\ecosystemstate.cpp(48): error C2664: 'void Boid::AddTargetForFoodSearch(Entity *)': el argumento 1 no puede convertirse de 'Recurs *' a 'Entity *'
+  c:\users\dani\documents\github\projecte-ia\activitat2_v2\source\ecosystemstate.cpp(48): note: Los tipos señalados no están relacionados; la conversión requiere reinterpret_cast, conversión de estilo de C o conversión de estilo de función
+  Generando código...
+  Compilando...
+  Main.cpp
+  Generando código...

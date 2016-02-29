@@ -10,7 +10,6 @@
 
 #include "Common/GameFramework.h"
 #include "Boid.h"
-#include "Player.h"
 #include "Obstacle.h"
 #include "Recurs.h"
 
@@ -29,14 +28,12 @@ public:
 
 	// Graphics
 	Texture boidTexture;
-	Texture playerTexture;
 
 	// Entities
 	Boid boidPool[BOID_POOL_SIZE];
 	int boidPoolOccupation = 0;
 	Boid boid;
-	Player player;
-	Recurs recurs[10];
+	Recurs recurs[15];
 
 	// Trail
 	Trail trailPool[BOID_POOL_SIZE];

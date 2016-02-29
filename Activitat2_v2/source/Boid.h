@@ -11,6 +11,7 @@
 #include "SimplePath.h"
 #include "Path.h"
 #include "Obstacle.h"
+#include "Recurs.h"
 #include "CombiningSteeringUtils.h"
 #include "FlowFieldUtils.h"
 
@@ -34,7 +35,8 @@ enum Behaviour
 	FLOCKING_SEEK,
 	PRIORITY_OBSTACLE,
 	PRIORITY_COLLISION,
-	FLOW_FLOCK_SEEK_PRIORITY
+	FLOW_FLOCK_SEEK_PRIORITY,
+	FOOD_SEARCH
 };
 
 #define MAX_NUMBER_TARGETS 10
@@ -118,9 +120,12 @@ struct Boid : public Entity
 	float K_MAX_STEER_AVOID_FORCE = 13.0f * 60.0f;
 	Entity* targets[MAX_NUMBER_TARGETS];
 	int numTargets = 0;
+	Entity* food[MAX_NUMBER_TARGETS];
+	int numFoods = 0;
 	float coneHeight = 80.0f;
 	float coneHalfAngle = 30.0f;
 	void AddTargetForCollisionAvoidance(Entity* target);
+	void AddTargetForFoodSearch(Entity* food);
 	bool collisionDetected = false; // Debug purposes
 
 									// Priority Steering
@@ -132,6 +137,10 @@ struct Boid : public Entity
 
 	// Flow Field Steering
 	FlowField* field;
+
+	//Food Search
+	float _visioHeight = 80.0f;
+	float _visioHalfAngle = 30.0f;
 
 	// Methods
 	virtual void Update(float deltaTime) override;
@@ -157,6 +166,7 @@ struct Boid : public Entity
 	void DeinitPrioritySteering();
 	void DoFlowFieldSteering(float deltaTime);
 	void DoPriorityFlowFlockingSeek(float deltaTime);
+	void DoSearchForFood(float deltaTime);
 
 	// Debug Methods
 	void InitDebug(SDL_Renderer* renderer, FC_Font* font);
