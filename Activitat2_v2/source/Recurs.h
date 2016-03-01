@@ -11,7 +11,7 @@ struct Recurs
 	float rad = 10.0f;
 };
 
-Recurs Recurs_Create(Vector2D position, float width, float height, float angle = 0.0f);
+Recurs Recurs_Create(Vector2D position, float angle);
 void Recurs_Render(Recurs* recurs, SDL_Renderer* renderer, Uint32 color);
 bool Recurs_IsOnTop(Recurs* recurs, Vector2D position);
 

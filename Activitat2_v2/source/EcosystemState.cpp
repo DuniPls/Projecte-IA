@@ -29,26 +29,13 @@ void EcosystemState::Init()
 	// Initialize Entities
 
 	// Seed Random
-	srand(5555);
+	srand(rand() % 10000);
 	int randomX = IntegerUtils::RandomRange(0, FIXED_WIDTH);
 	int randomY = IntegerUtils::RandomRange(0, FIXED_HEIGHT);
 
 	// Boids
 	//boid = {};
-	boid.position = { (float)randomX, (float)randomY };
-	boid.width = boidTexture.width;
-	boid.height = boidTexture.height;
 
-	boid.target = nullptr;
-
-	boid.food = nullptr;
-	
-	for (int i = 0; i < 10; i++)
-	{
-		boid.AddTargetForFoodSearch(&recurs[i]);
-	}
-	boid.SetBehaviour(Behaviour::NONE);
-	boid.InitDebug(display->renderer, fontVerySmall);
 	for (size_t i = 0; i < 10; i++)
 	{
 		srand(rand() % 10000);
@@ -56,6 +43,18 @@ void EcosystemState::Init()
 		int randomY = IntegerUtils::RandomRange(0, FIXED_HEIGHT);
 		recurs[i].position = { (float)randomX, (float)randomY };
 	}
+
+	boid.position = { 0.0f, 0.0f };
+	boid.width = boidTexture.width;
+	boid.height = boidTexture.height;
+
+	boid.target = nullptr;
+
+	boid.startFood(recurs);
+
+	boid.SetBehaviour(Behaviour::NONE);
+	boid.InitDebug(display->renderer, fontVerySmall);
+	
 	
 
 	// Initialize Text
@@ -223,8 +222,8 @@ void EcosystemState::Update(float deltaTime)
 	float currentDeltaTime = deltaTime * timeScale;
 
 	// Update Entities
-	boid.DoFullWander(currentDeltaTime);
-	boid.DoPerimeterAvoidance(currentDeltaTime);
+	//boid.DoFullWander(currentDeltaTime);
+	//boid.DoPerimeterAvoidance(currentDeltaTime);
 	boid.DoSearchForFood(currentDeltaTime);
 	boid.Update(currentDeltaTime);
 

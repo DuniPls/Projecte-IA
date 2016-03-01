@@ -241,4 +241,29 @@ namespace Vector2DUtils
 
 		return true;
 	}
+
+	static float Cross(Vector2D v2, Vector2D v1) {
+		return v1.x * v2.y - v1.y * v2.x;
+	}
+
+	static bool IsInsideTriangle(Vector2D _o, Vector2D p1, Vector2D p2, Vector2D p3) {
+		Vector2D v1 = p2 - p1;
+		Vector2D v2 = p3 - p1;
+
+		Vector2D u1 = p1 - _o;
+		Vector2D u2 = p2 - _o;
+		Vector2D u3 = p3 - _o;
+
+		float A = (Cross(v1, v2)) / 2.0f;
+		float a1 = (Cross(u2, u3)) / 2.0f;
+		float a2 = (Cross(u1, u2)) / 2.0f;
+		float a3 = (Cross(u1, u3)) / 2.0f;
+
+		if (a1 + a2 + a3 - A <50.0f && a1 + a2 + a3 - A >-50.0f)
+			return true;
+
+		else
+			return false;
+	}
+
 }

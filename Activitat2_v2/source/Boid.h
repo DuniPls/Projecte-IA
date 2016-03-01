@@ -14,6 +14,7 @@
 #include "Recurs.h"
 #include "CombiningSteeringUtils.h"
 #include "FlowFieldUtils.h"
+#include "math.h"
 
 enum Behaviour
 {
@@ -40,6 +41,7 @@ enum Behaviour
 };
 
 #define MAX_NUMBER_TARGETS 10
+#define PI 3.14159265
 
 // Make it global for easy debug manipulation
 static float K_FLOCK_COHESION = 0.4f;
@@ -120,13 +122,16 @@ struct Boid : public Entity
 	float K_MAX_STEER_AVOID_FORCE = 13.0f * 60.0f;
 	Entity* targets[MAX_NUMBER_TARGETS];
 	int numTargets = 0;
-	Entity* food[MAX_NUMBER_TARGETS];
-	int numFoods = 0;
-	float coneHeight = 80.0f;
+	Recurs food[MAX_NUMBER_TARGETS];
+	void startFood(Recurs* _r);
+	int numFoods = 10;
+	float coneHeight = 30.0f;
 	float coneHalfAngle = 30.0f;
+	float coneWidth = tan(coneHalfAngle*PI/180.0f)*coneHeight;
 	void AddTargetForCollisionAvoidance(Entity* target);
-	void AddTargetForFoodSearch(Entity* food);
 	bool collisionDetected = false; // Debug purposes
+	bool foodDetected = false;
+	int foodObjective = -1;
 
 									// Priority Steering
 	SteeringGroup groupArray[2];

@@ -507,49 +507,101 @@ void Boid::DoCollisionAvoidance(float deltaTime)
 }
 
 void Boid::DoSearchForFood(float deltaTime) {
-#if DEBUG
+	int tempObjective = -1;
+	numFoods = 10;
 	float shortestDistance = 999999999.9f;
-	Entity* firstTarget = nullptr;
+	Recurs firstTarget = food[0];
 
-	Vector2D coneBasePoint = { position.x + coneHeight, position.y };
-	Vector2D currentConeBase = Vector2DUtils::RotatePoint(position, coneBasePoint, angle);
+	Vector2D normSpd = Vector2D::Normalize(speed);
+	Vector2D normSpdInverted = { normSpd.y, -normSpd.x };
+	normSpdInverted = Vector2D::Normalize(normSpdInverted);
+
+	Vector2D _o = firstTarget.position;
+	Vector2D p1 = position;
+	//Vector2D p2 = {};
+	//Vector2D p3 = {};
+
+	Vector2D p2 = { position.x + normSpd.x * coneHeight + normSpdInverted.x * coneWidth  , position.y + normSpd.y * coneHeight + normSpdInverted.y * coneWidth };
+	Vector2D p3 = { position.x + normSpd.x * coneHeight + -normSpdInverted.x * coneWidth  , position.y + normSpd.y * coneHeight + -normSpdInverted.y * coneWidth };
 
 	collisionDetected = false;
 
-	for (int i = 0; i < numTargets; ++i)
+	for (int i = 0; i < numFoods; i++)
 	{
-		Entity* currentTarget = targets[i];
-
-		// Is target inside the cone?
-		if (Vector2DUtils::IsInsideCone(currentTarget->position, position, currentConeBase, coneHalfAngle))
+		Recurs currentTarget = food[i];
+		_o = currentTarget.position;
+		if (Vector2DUtils::IsInsideTriangle(_o, p1, p2, p3))
 		{
-			float currentDistance = Vector2D::Distance(position, currentTarget->position);
+			float currentDistance = Vector2D::Distance(position, currentTarget.position);
 			// Is the nearest targest inside the cone?
 			if (currentDistance < shortestDistance)
 			{
 				firstTarget = currentTarget;
 				shortestDistance = currentDistance;
 				collisionDetected = true;
+				tempObjective = i;
 			}
 		}
-	}
 
-	if (firstTarget == nullptr)
+	}
+	if (!foodDetected) {
+		foodDetected = collisionDetected;
+		foodObjective = tempObjective;
+	}
+	//if (collisionDetected) {
+	//	speed = 0;
+	//	steeringForce = SteeringUtils::DoKinematicSeek(firstTarget.position, position, K_MAX_SPEED);
+	//	// Modify according to mass to get acceleration
+	//	acceleration = steeringForce / mass;
+
+	//	// Update Speed with acceleration
+	//	speed += acceleration * deltaTime;
+	//}
+	//else {
+	//	/*steeringForce = SteeringUtils::DoSteeringWander(position, speed, K_MAX_SPEED, K_MAX_STEER_FORCE,
+	//		angle, &wanderAngle, wanderMaxChange, wanderCircleOffset, wanderCircleRadius);*/
+	//	steeringForce = SteeringUtils::DoKinematicSeek(food[2].position, position, K_MAX_SPEED);
+
+	//	// Modify according to mass to get acceleration
+	//	acceleration = steeringForce / mass;
+
+	//	// Update Speed with acceleration
+	//	speed += acceleration * deltaTime;
+	//}
+	//// Modify according to mass to get acceleration
+	//acceleration = steeringForce / mass;
+
+	//// Update Speed with acceleration
+	//speed += acceleration * deltaTime;
+	if (foodDetected) {
+		steeringForce = SteeringUtils::DoKinematicSeek(food[foodObjective].position, position, K_MAX_SPEED);
+		// Modify according to mass to get acceleration
+		acceleration = steeringForce / mass;
+
+		// Update Speed with acceleration
+		speed += acceleration * deltaTime;
+	}
+	else
 	{
-		return;
+		steeringForce = SteeringUtils::DoSteeringWander(position, speed, K_MAX_SPEED, K_MAX_STEER_FORCE,
+			angle, &wanderAngle, wanderMaxChange, wanderCircleOffset, wanderCircleRadius);		// Modify according to mass to get acceleration
+		acceleration = steeringForce / mass;
+
+		// Update Speed with acceleration
+		speed += acceleration * deltaTime;
+	}
+	if (Recurs_IsOnTop(&firstTarget, position)) {
+		speed = 0;
+		foodDetected = false;
 	}
 
-	// Flee from collision
-	steeringForce = SteeringUtils::DoSteeringSeek(firstTarget->position, position, speed, K_MAX_SPEED, K_MAX_STEER_AVOID_FORCE);
-#else
-	steeringForce = AdvancedSteeringUtils::DoCollisionAvoidance(position, speed, angle, K_MAX_SPEED, K_MAX_STEER_AVOID_FORCE, (Entity**)targets,
-		numTargets, coneHeight, coneHalfAngle, collisionDetected);
-#endif
-	// Modify according to mass to get acceleration
-	acceleration = steeringForce / mass;
+}
 
-	// Update Speed with acceleration
-	speed += acceleration * deltaTime;
+void Boid::startFood(Recurs * _r)
+{
+	for (int i = 0; i < MAX_NUMBER_TARGETS; i++)
+		food[i] = _r[i];
+		//food[i] = Recurs_Create(_r[i].position, _r[i].rad);
 }
 
 void Boid::AddTargetForCollisionAvoidance(Entity* target)
@@ -565,18 +617,6 @@ void Boid::AddTargetForCollisionAvoidance(Entity* target)
 	}
 }
 
-void Boid::AddTargetForFoodSearch(Entity* food)
-{
-	if (numFoods < MAX_NUMBER_TARGETS)
-	{
-		food[numFoods]=*food;
-		++numFoods;
-	}
-	else
-	{
-		SDL_Log("Target Array reached max number of targets.");
-	}
-}
 
 void Boid::DoObstacleAvoidance(float deltaTime)
 {

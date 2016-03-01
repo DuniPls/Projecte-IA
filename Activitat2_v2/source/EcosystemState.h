@@ -33,7 +33,7 @@ public:
 	Boid boidPool[BOID_POOL_SIZE];
 	int boidPoolOccupation = 0;
 	Boid boid;
-	Recurs recurs[15];
+	Recurs recurs[10];
 
 	// Trail
 	Trail trailPool[BOID_POOL_SIZE];
